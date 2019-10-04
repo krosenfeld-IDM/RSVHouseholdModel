@@ -22,7 +22,7 @@ for mp = mat_prot
 end
 xlabels = {'0%','25%','50%','75%','100%'};
 HM = heatmap(xlabels,mat_prot,heatmap_data0*100);
-HM.Colormap = jet(1200);
+HM.Colormap =  flipud(jet(1200));
 HM.Title = title_str;
 HM.FontSize = 24;
 HM.ColorLimits = [0,col_lim];
