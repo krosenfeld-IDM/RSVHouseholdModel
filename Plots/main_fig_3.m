@@ -22,7 +22,8 @@ title('Force of inf. on age groups')%,'FontSize',14)
 
 subplot(2,2,2)
 stacked_HH_bars = [mean_foi_H_U1 mean_foi_H_O1_1+mean_foi_H_O1_0];
-bar(stacked_HH_bars,'stacked');
+% bar(stacked_HH_bars,'stacked');
+bar(stacked_HH_bars);
 set(gca,'FontSize',16)
 title('Force of inf. on households')
 xlabel('HH size')
@@ -50,7 +51,8 @@ xlim([0,35])
 
 
 subplot(2,2,4)
-bar([mean(InHH_inf_rate_u1,2) mean(InHH_inf_rate_o1,2)],'stacked')
+% bar([mean(InHH_inf_rate_u1,2) mean(InHH_inf_rate_o1,2)],'stacked')
+bar([mean(InHH_inf_rate_u1,2) mean(InHH_inf_rate_o1,2)])
 set(gca,'FontSize',16)
 title('Total infection rate within HHs')
 xlabel('HH size')
