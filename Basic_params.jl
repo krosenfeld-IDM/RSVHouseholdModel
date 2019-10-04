@@ -9,7 +9,7 @@ MaxNumberOfU1s = 2;
 initial_year_index = 1;
 
 #basic dynamic parameters
-const γ_1 = (1./9.)
+const γ_1 = (1.0/9.)
 const γ_2 = 0.25
 const ν = (1.0/180.0)
 const sus_2 = 0.75
