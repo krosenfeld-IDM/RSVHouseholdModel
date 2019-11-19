@@ -144,10 +144,10 @@ xticklocs = 1:5:40;
 % bar(xticklocs+1,Ctrl2,0.15,'FaceColor',[0 1 0],'LineStyle','none')
 % errorbar(xticklocs,M2,BarLower95Pred,BarUpper95Pred,'LineStyle','none','color','black','LineWidth',2)
 
-bar(xticklocs-1,100*T2/sum(T2),0.15,'FaceColor',[1 0 0],'LineStyle','none')
-bar(xticklocs,100*M2/sum(M2),0.15,'FaceColor',[0.7 0.7 1],'LineStyle','none')
+bar(xticklocs-1,T2,0.15,'FaceColor',[1 0 0],'LineStyle','none')
+bar(xticklocs,M2,0.15,'FaceColor',[0.7 0.7 1],'LineStyle','none')
 % bar(xticklocs+1,100*Ctrl2/sum(Ctrl2),0.15,'FaceColor',[0 1 0],'LineStyle','none')
-errorbar(xticklocs,100*M2/sum(M2),100*BarLower95Pred/sum(M2),100*BarUpper95Pred/sum(M2),'LineStyle','none','color','black','LineWidth',2)
+errorbar(xticklocs,M2,BarLower95Pred,BarUpper95Pred,'LineStyle','none','color','black','LineWidth',2)
 % errorbar(xticklocs+1,100*Ctrl2/sum(Ctrl2),100*(Ctrl2 - pred_intervals_C2(:,1))/sum(Ctrl2),100*(pred_intervals_C2(:,2)-Ctrl2)/sum(Ctrl2),'LineStyle','none','color','black','LineWidth',2)
 
 % bar(xticklocs-1,T2,0.15,'FaceColor',[1 0 0],'LineStyle','none')
@@ -163,7 +163,7 @@ l = legend('Data','Model');
 
 l.Box = 'off';
 set(gca,'FontSize',18)
-ylabel('% hospitalisations','FontSize',22)
+ylabel('Hospitalisations','FontSize',22)
 title('Hospitalisation age profile','FontSize',19)
 % ylim([0,75])
 % bottom right

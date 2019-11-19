@@ -251,110 +251,46 @@ H_eff_mat(isinf(H_eff_mat)) = 0;
 I_eff_mat(isinf(I_eff_mat)) = 0;
 
 subplot(1,2,1)
-plot(house_prot(1:end),H_eff_mat(1:end,:),'LineWidth',3)
-hold on
-plot(house_prot(2:end),SU_H_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
-
-l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
+bar(house_prot,H_eff_mat)
+% plot(house_prot(1:end),H_eff_mat(1:end,:),'LineWidth',3)
+% hold on
+% plot(house_prot(2:end),SU_H_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
+% 
+l = legend('No MAB vac.','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
 l.Box = 'off';
 l.Location = 'northeast';
-
+% 
 set(gca,'FontSize',18);
-xlabel('Household coverage')
+xlabel('Household coverage (IRP)','FontSize',28)
+ylabel('Decrease in hospitalisations per vaccine used','FontSize',28)
 set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-title('Avoided hospitalisations per vaccine')
+title('Vaccine efficiency (hospitalisations)')
 ylim([0,0.004])
-
-
+% 
+% 
 subplot(1,2,2)
-plot(house_prot(1:end),I_eff_mat(1:end,:),'LineWidth',3)
-hold on
-plot(house_prot(2:end),SU_I_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
+bar(house_prot,I_eff_mat)
+
+% plot(house_prot(1:end),I_eff_mat(1:end,:),'LineWidth',3)
+% hold on
+% plot(house_prot(2:end),SU_I_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
 
 % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
 
 set(gca,'FontSize',18);
-xlabel('Household coverage')
+xlabel('Household coverage (IRP)','FontSize',28)
+ylabel('Decrease in infections per vaccine used','FontSize',28)
 set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-title('Avoided infections per vaccine')
-ylim([0,0.3])
+title('Vaccine efficiency (infections)')
+% ylim([0,0.3])
 
 
-% subplot(2,2,3)
-% plot(house_prot(2:end),SU_H_eff_mat(2:end,:),'LineWidth',3)
-% % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided hospitalisations per SU vaccine')
-% ylim([0,0.008])
-% subplot(2,2,4)
-% plot(house_prot(2:end),SU_I_eff_mat(2:end,:),'LineWidth',3)
-% % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% l.Location = 'southeast';
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided infections per SU vaccine')
-% ylim([0,0.3])
-% 
-
-%%
-% figure(1)
-% clf
-% H_eff_mat(isinf(H_eff_mat)) = 0;
-% I_eff_mat(isinf(I_eff_mat)) = 0;
-% 
-% subplot(2,2,1)
-% plot(house_prot(1:end),H_eff_mat(1:end,:),'LineWidth',3)
-% l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% l.Location = 'northeast';
-% 
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided hospitalisations per vaccine')
-% ylim([0,0.008])
-% subplot(2,2,2)
-% plot(house_prot(1:end),I_eff_mat(1:end,:),'LineWidth',3)
-% % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% l.Location = 'southeast';
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided infections per vaccine')
-% ylim([0,0.3])
-% 
-% 
-% subplot(2,2,3)
-% plot(house_prot(2:end),SU_H_eff_mat(2:end,:),'LineWidth',3)
-% % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided hospitalisations per SU vaccine')
-% ylim([0,0.008])
-% subplot(2,2,4)
-% plot(house_prot(2:end),SU_I_eff_mat(2:end,:),'LineWidth',3)
-% % l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
-% l.Box = 'off';
-% l.Location = 'southeast';
-% set(gca,'FontSize',18);
-% xlabel('Household coverage')
-% set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
-% title('Avoided infections per SU vaccine')
-% ylim([0,0.3])
 
 
 %% 
 annotation('textbox',[0.03,0.86,0.1,0.1],'String','A','FitBoxToText','on','FontSize',40,'LineStyle','none');
 annotation('textbox',[0.48,0.86,0.1,0.1],'String','B','FitBoxToText','on','FontSize',40,'LineStyle','none');
-% annotation('textbox',[0.03,0.39,0.1,0.1],'String','C','FitBoxToText','on','FontSize',40,'LineStyle','none');
-% annotation('textbox',[0.48,0.39,0.1,0.1],'String','D','FitBoxToText','on','FontSize',40,'LineStyle','none');
+
+%%
 
 
