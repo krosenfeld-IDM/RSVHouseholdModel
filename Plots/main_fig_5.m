@@ -1,4 +1,5 @@
 %% Plot change in dynamics and age profile of infection post-vaccination
+clear
 D_base = load('Baseline_incidence_R1.5.mat');
 D_ctrl = load('fifty_reduction_R1.5.mat');
 load('predictions_for_plotting_model_schools_R_1.5.mat');
