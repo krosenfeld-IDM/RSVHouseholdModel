@@ -39,10 +39,8 @@ Mesh = mean( [Meshstartpts ; Meshendpts], 1)/365.25;
 
 hold on
 
-% plot(Mesh(1:(end-1)),mean_transmission_rate_in_HH(1:(end-1)) ) ;
  plot([1:30,40],[mean_transmission_rate_in_HH;mean_transmission_rate_in_HH(end)],'color',[ 0 0 0],'LineWidth',7 ) ;
 
-% bar(33,mean_transmission_rate_in_HH(end),5)
 set(gca,'XTick',[1:4:29,33],'Box','on')
 set(gca,'XTickLabel',{'0-1m','4-5m','8-9m','1yr','5yr','9yr','13yr','17yr','18+yrs'})
 set(gca,'FontSize',16,'XTickLabelRotation',-45);
@@ -51,7 +49,6 @@ xlim([0,35])
 
 
 subplot(2,2,4)
-% bar([mean(InHH_inf_rate_u1,2) mean(InHH_inf_rate_o1,2)],'stacked')
 bar([mean(InHH_inf_rate_u1,2) mean(InHH_inf_rate_o1,2)])
 set(gca,'FontSize',16)
 title('Total infection rate within HHs')

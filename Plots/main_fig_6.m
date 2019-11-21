@@ -4,15 +4,10 @@ load('vaccine_efficiency_1.5.mat');
 load('baseline_inf_numbers_1.5.mat');
 
 %%
-% num_vacs(3,:) = 0;
-% num_vacs(4,:) = num_vacs(4,:);
 
-% num_vacs(3,:) = 0;
-% num_vacs(4,:) = 0;
 F = (num_vacs(1,:) == 0);
 num_vacs(3,F) = 0;
 
-% num_vacs(3:4,:) = num_vacs(3:4,:);
 R = 3.336; %inflation due to non KDHSS hospitalisation
 num_vacs(3,:) = num_vacs(3,:)*R;
 num_vacs(4,:) = num_vacs(4,:)*R;
@@ -28,13 +23,11 @@ H_eff_mat = zeros(length(house_prot),length(mat_prot));
 SU_I_eff_mat = zeros(length(house_prot),length(mat_prot));
 SU_H_eff_mat = zeros(length(house_prot),length(mat_prot));
 
-%% Find the additional reduction due to SU vaccines
 
 
 %%
 
 % For each of household coverage 25,50,75,100% do a plot of mat. vaccine efficacy 
-% Mat prot eff = 0
 F = (num_vacs(1,:) == 0);
 inf_eff = zeros(length(house_prot),3);
 hosp_eff = zeros(length(house_prot),3);
@@ -252,10 +245,7 @@ I_eff_mat(isinf(I_eff_mat)) = 0;
 
 subplot(1,2,1)
 bar(house_prot,H_eff_mat)
-% plot(house_prot(1:end),H_eff_mat(1:end,:),'LineWidth',3)
-% hold on
-% plot(house_prot(2:end),SU_H_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
-% 
+
 l = legend('No MAB vac.','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
 l.Box = 'off';
 l.Location = 'northeast';
@@ -271,18 +261,13 @@ ylim([0,0.004])
 subplot(1,2,2)
 bar(house_prot,I_eff_mat)
 
-% plot(house_prot(1:end),I_eff_mat(1:end,:),'LineWidth',3)
-% hold on
-% plot(house_prot(2:end),SU_I_eff_mat(2:end,:),'LineWidth',3,'LineStyle','--')
 
-% l = legend('Mat. prot. = 0','Mat. prot. = 15','Mat. prot. = 30','Mat. prot. = 45','Mat. prot. = 60','Mat. prot. = 75','Mat. prot. = 90');
 
 set(gca,'FontSize',18);
 xlabel('Household coverage (IRP)','FontSize',28)
 ylabel('Decrease in infections per vaccine used','FontSize',28)
 set(gca,'XTick',[0 0.25 0.5 0.75 1],'XTickLabel',{'0%', '25%', '50%', '75%', '100%'})
 title('Vaccine efficiency (infections)')
-% ylim([0,0.3])
 
 
 

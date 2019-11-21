@@ -1,6 +1,6 @@
 %% Plot change in dynamics and age profile of infection post-vaccination
-D_base = load('Baseline_incidence_R1.5_finer_DT.mat');
-D_ctrl = load('fifty_reduction_R1.5_finer_DT.mat');
+D_base = load('Baseline_incidence_R1.5.mat');
+D_ctrl = load('fifty_reduction_R1.5.mat');
 load('predictions_for_plotting_model_schools_R_1.5.mat');
 Eff_struct = load('EffectivenessData_R1.5.mat');
 X15 = Eff_struct.data;
@@ -18,12 +18,12 @@ t_base = D_base.times;
 I_ctrl = D_ctrl.incidence;
 t_ctrl = D_ctrl.times;
 t = t_base;
-%% Calculate median and 5-95% prediction intervals
-I_perc_base = prctile(I_base,[1,50,99],1);
+%% Calculate median and 2.5-97.5% prediction intervals
+I_perc_base = prctile(I_base,[2.5,50,97.5],1);
 I_av_base = mean(I_base);
 I_sig_base = std(I_base);
 
-I_perc_ctrl = prctile(I_ctrl,[1,50,99],1);
+I_perc_ctrl = prctile(I_ctrl,[2.5,50,97.5],1);
 I_av_ctrl = mean(I_ctrl);
 I_sig_ctrl = std(I_ctrl);
 %%
@@ -46,12 +46,10 @@ StandErr = (TotalTrueIncidence - TotalModelIncidence)./sqrt(TotalModelIncidence)
 
 %Age distribution of cases
 TrueAgeDistribution = sum(true_incidence,1);
-% TrueAgeDistribution = sum(true_incidence(end-5*52:end,:),1);
-% TrueAgeDistribution = TrueAgeDistribution/sum(TrueAgeDistribution);
+
 
 ModelAgeDistribution = sum(model_pred,1);
-% ModelAgeDistribution = sum(model_pred(end-5*52:end,:),1);
-% ModelAgeDistribution = ModelAgeDistribution/sum(ModelAgeDistribution);
+
 
 
 
@@ -111,9 +109,7 @@ shadedErrorBar( t_ten_years ,0.5*I_b_50(ind),0.5*[I_b_95(ind)-I_b_50(ind) ; I_b_
 ylim([0,35])
 xlim([-20,10*365+20])
 set(gca,'FontSize',18,'XTick',365:365:365*10,'XTickLabel',1:10)
-% XTick = 365:365:365*10;
-% XTickLabel = 1:10;
-% FontSize = 30;
+
 xlabel('Years after vaccination implementation','FontSize',18);
 ylabel('Weekly hospitalisations','FontSize',22);
 

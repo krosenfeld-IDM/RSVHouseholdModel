@@ -13,10 +13,8 @@ subplot(2,2,1)
 
 HM = generate_heatmap(X15_1,'% reduction in hospitalisation',60);
 HM.FontSize = 18;
-% dim3 = [.33 .238 .07 .115];
-% annotation('rectangle',dim3,'LineWidth',10)
+
 title('% reduction in hospitalisation');
-% ylabel('Mat. vaccine protection period')
 
 
 
@@ -32,10 +30,8 @@ subplot(2,2,2)
 
 HM = generate_heatmap(X15_50,'% reduction in hospitalisation',60);
 HM.FontSize = 18;
-% dim3 = [.33 .238 .07 .115];
-% annotation('rectangle',dim3,'LineWidth',10)
+
 title('% reduction in hospitalisation');
-% ylabel('Mat. vaccine protection period')
 
 
 
