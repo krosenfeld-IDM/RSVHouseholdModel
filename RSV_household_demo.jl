@@ -39,6 +39,11 @@ include("LoadOptimalParams.jl");
 # Solve the model
 neg_LL_opt,sol_rsv = neg_objective_for_params(Θ_Opt)
 
-#Plot the model
+# Plot the model
 x,y,z,p = create_comparison_plot(sol_rsv)
+
+# save the plot p to file RSV_household_demo.png
+savefig(p,"RSV_household_demo.png")
 display(p)
+
+println("done.")
