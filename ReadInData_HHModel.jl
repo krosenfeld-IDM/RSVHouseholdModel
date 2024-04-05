@@ -2,8 +2,8 @@
 using JLD
 YearlyJointDistributions = load("EachYearJointDistribs_new.jld","people_distribution")
 
-DailyRSV = load("DailyIFATByAgeCat.jld","DailyRSVByAgeCat")
-days = load("DailyIFATByAgeCat.jld","x")
+DailyRSV = load("DailyIFATbyAgeCat.jld","DailyRSVByAgeCat")
+days = load("DailyIFATbyAgeCat.jld","x")
 N_HEachYear = load("N_HEachYearvs3.jld","N_HEachYear")
 
 for year = 1:length(N_HEachYear)
