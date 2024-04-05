@@ -14,5 +14,5 @@ The MATLAB® code used to generate the publication plots, and the outputed data 
 
 Open `julia` from the terminal and install the dependencies:
 ```
-julia> Pkg.add("Distributions"); Pkg.add("DifferentialEquations"); Pkg.add("Plots")
+julia> Pkg.add("Distributions"); Pkg.add("DifferentialEquations"); Pkg.add("Plots"); Pkg.add("JLD"); Pkg.add("Hiccup"); Pkg.add("BlackBoxOptim")
 ```
