@@ -1,0 +1,17 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/julialang/devcontainer-features/julia:1": {
+      "channel": "0.6"
+    }
+  },
+	"customizations": {
+		"vscode": {
+			"extensions": [
+        "julialang.language-julia",
+				"ms-toolsai.jupyter",
+				"github.copilot"
+      ]
+		}
+	}
+}
