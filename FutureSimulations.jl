@@ -93,11 +93,11 @@ end
 
 function InplaceStateToHouseholdConversion!(z,P::HH_RSV_VaccinationModelParameters)
     #Calculate the household size to household size transmission rate
-    A_mul_B!(P.Pre.S1_H,P.ConvMatrix_S1_H,z)
-    A_mul_B!(P.Pre.I1_H,P.ConvMatrix_I1_H,z)
-    A_mul_B!(P.Pre.N1_H,P.ConvMatrix_N1,z)
-    A_mul_B!(P.Pre.N2_0_H,P.ConvMatrix_N2_0,z)
-    A_mul_B!(P.Pre.N2_1_H,P.ConvMatrix_N2_1,z)
+    mul!(P.Pre.S1_H,P.ConvMatrix_S1_H,z)
+    mul!(P.Pre.I1_H,P.ConvMatrix_I1_H,z)
+    mul!(P.Pre.N1_H,P.ConvMatrix_N1,z)
+    mul!(P.Pre.N2_0_H,P.ConvMatrix_N2_0,z)
+    mul!(P.Pre.N2_1_H,P.ConvMatrix_N2_1,z)
     return nothing
 end
 
@@ -107,13 +107,13 @@ function InPlaceHouseholdToAgeConversion!(z,P::HH_RSV_VaccinationModelParameters
     P.Pre.N2_1_H[1] = 1.
     #Convert into a prediction about the numbers of infecteds and susceptibles in each age category
     P.Pre.I1_A .= mean(P.Pre.I1_H)*ones(sum(P.U1_cats))
-    A_mul_B!(P.Pre.I2_A,P.Inf_AgivState,z)
+    mul!(P.Pre.I2_A,P.Inf_AgivState,z)
     P.Pre.I_A .= [P.Pre.I1_A;inf_2*P.Pre.I2_A] #Over 1s are less infectious
     P.Pre.S1_A .=  (1-AvMaternalProtU1s(1/P.α,CurrentSolidProtectionDuration,MABCoverage))*mean(P.Pre.S1_H)*ones(sum(P.U1_cats)) #Accounts for possibly being maternally protected
-    A_mul_B!(P.Pre.S2_A,P.Sus_AgivState,z)
+    mul!(P.Pre.S2_A,P.Sus_AgivState,z)
     P.Pre.S_A .= [P.Pre.S1_A;sus_2*P.Pre.S2_A]#Effective susceptibility is lower for O1s
     P.Pre.N1_A .= mean(P.Pre.S1_H)*ones(sum(P.U1_cats))
-    A_mul_B!(P.Pre.N2_A,P.N_AgivState,z)
+    mul!(P.Pre.N2_A,P.N_AgivState,z)
     P.Pre.N_A .= [P.Pre.N1_A;P.Pre.N2_A]
     return nothing
 end
@@ -121,7 +121,7 @@ end
 function InPlaceAgedepForceOfInfection!(z,P::HH_RSV_VaccinationModelParameters)
     #Force of infection at the level of the population outside of homestead
     (P.Pre.N,P.Pre.N2) = get_population_size(z)
-    A_mul_B!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A + P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
+    mul!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A + P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
     return nothing
 end
 
@@ -208,7 +208,7 @@ function calculate_rate_of_vaccinations(z,P::HH_RSV_VaccinationModelParameters,y
 #Find the household size dependent per-adult replacement rate
     μ_H = FindReplacementRatesForYear(N_HEachYear,index,η_1,MaxNumberOfU1s)
     birth_rate_hh = μ_H[N_vect].*N2_vec.*z
-    return sum(birth_rate_hh),HHCoverage*vecdot(birth_rate_hh,N2_vec-1)
+    return sum(birth_rate_hh),HHCoverage*dot(birth_rate_hh,N2_vec-1)
 end
 
 function output_func_for_rsv_number_vaccines(sol,i)
