@@ -1,6 +1,6 @@
 # RSVHouseholdModel
 
-Julia 0.6 code for running the RSV Household transmission model (see https://www.biorxiv.org/content/10.1101/569335v1.abstract for preprint).
+Julia 1.10 code for running the RSV Household transmission model (see https://www.biorxiv.org/content/10.1101/569335v1.abstract for preprint).
 
 The main files for inferring parameters, running simulations and running forecasts are:
 
@@ -11,12 +11,14 @@ The main files for inferring parameters, running simulations and running forecas
 The MATLAB® code used to generate the publication plots, and the outputed data behind these, are located in the Plots folder.
 
 ## Requirements
-- julia v0.6
-- hdf5-tools
+
+- julia v1.10
 
 ## Setup
 
-Open `julia` from the terminal and install the dependencies:
+Open `julia` from the terminal and activate the project environment by running:
 ```
-julia> Pkg.add("Distributions"); Pkg.add("DifferentialEquations"); Pkg.add("Plots"); Pkg.add("JLD"); Pkg.add("Hiccup"); Pkg.add("BlackBoxOptim")
+julia> ]
+pkg> activate .
+pkg> instantiate
 ```
