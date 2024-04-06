@@ -7,9 +7,9 @@ function SetupConditionalDistributions(YearlyJointDistributions::Vector{Array{Fl
     P_UgivH = [zeros(size(P_AHU[1][1,:,:])) for i = 1:18]
 
 
-    P_HU = [sum(P_AHU[n],1) for n = 1:18]
-    P_A = [sum(P_AHU[n],2:3) for n = 1:18]
-    P_H = [sum(P_AHU[n],[1,3]) for n = 1:18]
+    P_HU = [sum(P_AHU[n],dims=1) for n = 1:18]
+    P_A = [sum(P_AHU[n],dims=2:3) for n = 1:18]
+    P_H = [sum(P_AHU[n],dims=[1,3]) for n = 1:18]
     for n = 1:18, j = 1:MaxHouseholdSize, k = 1:2
         P_UgivH[n][j,k] = P_HU[n][1,j,k]/P_H[n][1,j,1]
     end
