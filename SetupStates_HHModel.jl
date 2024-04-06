@@ -7,7 +7,7 @@ function CreateStatesTupleExpression(n::Int64,L1::Int64)
       str = string("0:$(L1),",str)
     end
     str_end = ")"
-    return parse(string(str_start,str,str_end))
+    return Meta.parse(string(str_start,str,str_end))
 end
 ex = CreateStatesTupleExpression(6,MaxHouseholdSize)
 eval(ex)
@@ -41,7 +41,7 @@ States,d1 = ConstructStatesMatrix(StatesTuple,MaxHouseholdSize)
 StatesTuple = 0
 
 # Construct vectors of household state properties
-N_vect = sum(States,2)
-N1_vec = sum(States[:,1:3],2)
-N2_vec = sum(States[:,4:6],2)
+N_vect = sum(States,dims=2)
+N1_vec = sum(States[:,1:3],dims=2)
+N2_vec = sum(States[:,4:6],dims=2)
 U1_state = N1_vec .> 0
