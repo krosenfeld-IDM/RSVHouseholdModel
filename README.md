@@ -10,6 +10,10 @@ The main files for inferring parameters, running simulations and running forecas
 
 The MATLAB® code used to generate the publication plots, and the outputed data behind these, are located in the Plots folder.
 
+## Requirements
+- julia v0.6
+- hdf5-tools
+
 ## Setup
 
 Open `julia` from the terminal and install the dependencies:
