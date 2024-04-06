@@ -12,12 +12,12 @@ function CreateBulkPlot(sol)
     I2_vec = States[:,5];
     R2_vec = States[:,6];
 
-    S1 = [vecdot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
-    I1 = [vecdot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
-    R1 = [vecdot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
-    S2 = [vecdot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
-    I2 = [vecdot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
-    R2 = [vecdot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
+    S1 = [dot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
+    I1 = [dot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
+    R1 = [dot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
+    S2 = [dot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
+    I2 = [dot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
+    R2 = [dot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
     plt = plot(sol.t,S1,lab="S1",reuse = false);
     plot!(plt,sol.t,I1,lab="I1");
     plot!(plt,sol.t,R1,lab="R1");
@@ -35,12 +35,12 @@ function CreatePlotHHSizeRestriction(sol,HHSize)
     I2_vec = States[:,5].*(N_vect .== HHSize);
     R2_vec = States[:,6].*(N_vect .== HHSize);
 
-    S1 = [vecdot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
-    I1 = [vecdot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
-    R1 = [vecdot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
-    S2 = [vecdot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
-    I2 = [vecdot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
-    R2 = [vecdot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
+    S1 = [dot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
+    I1 = [dot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
+    R1 = [dot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
+    S2 = [dot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
+    I2 = [dot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
+    R2 = [dot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
     plt = plot(sol.t,S1,lab="S1",reuse = false);
     plot!(plt,sol.t,I1,lab="I1");
     plot!(plt,sol.t,R1,lab="R1");
@@ -55,9 +55,9 @@ function CreateBulkPlot_just_u1s(sol)
     I1_vec = States[:,2];
     R1_vec = States[:,3];
 
-    S1 = [vecdot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
-    I1 = [vecdot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
-    R1 = [vecdot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
+    S1 = [dot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
+    I1 = [dot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
+    R1 = [dot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
 
     plt = plot(sol.t,S1,lab="S1",reuse = false);
     plot!(plt,sol.t,I1,lab="I1");
@@ -70,9 +70,9 @@ function CreatePlotHHSizeRestriction_just_u1s(sol,HHSize)
     I1_vec = States[:,2].*(N_vect .== HHSize);
     R1_vec = States[:,3].*(N_vect .== HHSize);
 
-    S1 = [vecdot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
-    I1 = [vecdot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
-    R1 = [vecdot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
+    S1 = [dot(sol[(M_a+1):end,n],S1_vec) for n = 1:length(sol.t)]
+    I1 = [dot(sol[(M_a+1):end,n],I1_vec) for n = 1:length(sol.t)]
+    R1 = [dot(sol[(M_a+1):end,n],R1_vec) for n = 1:length(sol.t)]
     plt = plot(sol.t,S1,lab="S1",reuse = false);
     plot!(plt,sol.t,I1,lab="I1");
     plot!(plt,sol.t,R1,lab="R1");
@@ -85,9 +85,9 @@ function CreateBulkPlot_just_o1s(sol)
     I2_vec = States[:,5];
     R2_vec = States[:,6];
 
-    S2 = [vecdot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
-    I2 = [vecdot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
-    R2 = [vecdot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
+    S2 = [dot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
+    I2 = [dot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
+    R2 = [dot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
 
     plt = plot(sol.t,S2,lab="S2",reuse = false);
     plot!(plt,sol.t,I2,lab="I2");
@@ -100,9 +100,9 @@ function CreatePlotHHSizeRestriction_just_01s(sol,HHSize)
     I2_vec = States[:,5].*(N_vect .== HHSize);
     R2_vec = States[:,6].*(N_vect .== HHSize);
 
-    S2 = [vecdot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
-    I2 = [vecdot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
-    R2 = [vecdot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
+    S2 = [dot(sol[(M_a+1):end,n],S2_vec) for n = 1:length(sol.t)]
+    I2 = [dot(sol[(M_a+1):end,n],I2_vec) for n = 1:length(sol.t)]
+    R2 = [dot(sol[(M_a+1):end,n],R2_vec) for n = 1:length(sol.t)]
     plt = plot(sol.t,S2,lab="S2",reuse = false);
     plot!(plt,sol.t,I2,lab="I2");
     plot!(plt,sol.t,R2,lab="R2");
@@ -111,8 +111,8 @@ end
 
 function create_pop_size_plot(sol)
     d1,d2 = size(sol)
-    N1 = [vecdot(sol[(M_a+1):end,n],N1_vec) for n = 1:length(sol.t)]
-    N2 = [vecdot(sol[(M_a+1):end,n],N2_vec) for n = 1:length(sol.t)]
+    N1 = [dot(sol[(M_a+1):end,n],N1_vec) for n = 1:length(sol.t)]
+    N2 = [dot(sol[(M_a+1):end,n],N2_vec) for n = 1:length(sol.t)]
     plt = plot(sol.t,N1,lab="N1",reuse=false);
     plot!(plt,sol.t,N2,lab="N2");
     return plt
@@ -120,8 +120,8 @@ end
 
 function create_pop_size_plot_for_o1s_or_u1s(sol,n)
     d1,d2 = size(sol)
-    N1 = [vecdot(sol[(M_a+1):end,n],N1_vec) for n = 1:length(sol.t)]
-    N2 = [vecdot(sol[(M_a+1):end,n],N2_vec) for n = 1:length(sol.t)]
+    N1 = [dot(sol[(M_a+1):end,n],N1_vec) for n = 1:length(sol.t)]
+    N2 = [dot(sol[(M_a+1):end,n],N2_vec) for n = 1:length(sol.t)]
     if n == 1
         plt = plot(sol.t,N1,lab="N1",reuse=false);
     elseif n == 2
