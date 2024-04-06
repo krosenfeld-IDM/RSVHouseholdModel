@@ -1,7 +1,7 @@
 #Constructs the vector field (the RHS of the fundamental dynamical equation of the model) for the household model
 
 function set_conversion_matrices!(P::HH_RSVModelParameters)
-    InvEffHHSize = (max.(1,N_vect-1)).^(-P.EffHHSizePower);
+    InvEffHHSize = (max.(1,N_vect.-1)).^(-P.EffHHSizePower);
     ConvMatrix_I1_H = zeros(MaxHouseholdSize,d1)
     ConvMatrix_S1_H = zeros(MaxHouseholdSize,d1)
     ConvMatrix_S2_0_H = zeros(MaxHouseholdSize,d1)
