@@ -1,6 +1,8 @@
 #Demonstration code for model
 
 cd(pwd())
+using Revise
+
 # Basic_params.jl contains the basic params of RSV, change SchoolsOnlyR_0 variable to 0,0.5,1,1.5 as desired
 #Also defines a lookback variable which determines the time window over which RSV hospitalisations were binned (default 1 week)
 include("Basic_params.jl");
