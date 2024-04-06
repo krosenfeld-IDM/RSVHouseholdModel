@@ -4,9 +4,13 @@
 # Declare the season start and finish dates and the year start and finish dates
 # Declare the conditional age distribution functions
 
+using Base.MathConstants
+using SparseArrays
+using LinearAlgebra
+
 #Age mesh and categories
-MeshAgesEndPts = [[Float64(i) for i = linspace(30.4,365.25,12)]
-;[Float64(i) for i = linspace(2*365.25,365.25*17,16)]
+MeshAgesEndPts = [[Float64(i) for i = range(30.4,365.25,12)]
+;[Float64(i) for i = range(2*365.25,365.25*17,16)]
 ;18*365.25;150*365.25]
 MeshAgesStartPts = [0;MeshAgesEndPts[1:(end-1)]]
 
@@ -265,27 +269,27 @@ end
 
 
 function create_RSV_model()
-    PreAllocatedVects = PreAllocated(Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(MaxHouseholdSize),
-    Vector{Float64}(sum(U1_cats)),
-    Vector{Float64}(sum(.~U1_cats)),
-    Vector{Float64}(M_a), #Over 1s are less infectious
-    Vector{Float64}(sum(U1_cats)),
-    Vector{Float64}(sum(.~U1_cats)),
-    Vector{Float64}(M_a),
-    Vector{Float64}(sum(U1_cats)),
-    Vector{Float64}(sum(.~U1_cats)),
-    Vector{Float64}(M_a),
-    Vector{Float64}(M_a),
-    Vector{Float64}(sum(U1_cats)),
-    Vector{Float64}(sum(.~U1_cats)),
-    Vector{Float64}(sum(.~U1_cats)),
-    Vector{Float64}(d1),
-    Vector{Float64}(d1),
+    PreAllocatedVects = PreAllocated(Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, MaxHouseholdSize),
+    Vector{Float64}(undef, sum(U1_cats)),
+    Vector{Float64}(undef, sum(.~U1_cats)),
+    Vector{Float64}(undef, M_a), #Over 1s are less infectious
+    Vector{Float64}(undef, sum(U1_cats)),
+    Vector{Float64}(undef, sum(.~U1_cats)),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, sum(U1_cats)),
+    Vector{Float64}(undef, sum(.~U1_cats)),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, sum(U1_cats)),
+    Vector{Float64}(undef, sum(.~U1_cats)),
+    Vector{Float64}(undef, sum(.~U1_cats)),
+    Vector{Float64}(undef, d1),
+    Vector{Float64}(undef, d1),
     Float64(1),
     Float64(1),
     Float64(1),
@@ -304,17 +308,17 @@ function create_RSV_model()
     Float64(1),
     Float64(1),
     Float64(1),
-    Vector{Float64}(M_a),
-    Vector{Float64}(M_a),
-    Vector{Float64}(M_a),
-    Vector{Float64}(d1+M_a),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, M_a),
+    Vector{Float64}(undef, d1+M_a),
     Float64(1),
     -99,
     -99,
-    Vector{Float64}(d1),
+    Vector{Float64}(undef, d1),
     Float64(1))
 
-    I_z = eye(10)
+    I_z = I(10)
     I_z_sp = sparse(I_z)
     I_z_vect = [zeros(MaxHouseholdSize) for i=1:18]
 
@@ -322,7 +326,7 @@ function create_RSV_model()
     0.1,
     0.1,60.,1.,1.,0.,
     1/30.,10.,0.,
-    t -> 1/(1 + exp(-0.*cospi(2*(t - 0.)/365.25))),
+    t -> 1/(1 + exp(-0. * cospi(2*(t - 0.)/365.25))),
     zeros(18),zeros(18),zeros(30),
     I_z_sp,I_z_sp,I_z_sp,I_z_sp,I_z_sp,I_z_sp,
     I_z_sp,I_z_sp,I_z_sp,I_z_sp,I_z_sp,I_z_sp,I_z_sp,
