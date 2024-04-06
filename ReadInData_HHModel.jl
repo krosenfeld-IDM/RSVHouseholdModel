@@ -1,9 +1,8 @@
 # Read in data and organise incidence into age category and weeks
 using JLD,Dates
 YearlyJointDistributions = load("input/EachYearJointDistribs_new.jld","people_distribution")
-
 DailyRSV = load("input/DailyIFATbyAgeCat.jld","DailyRSVByAgeCat")
-days = load("input/DailyIFATbyAgeCat.jld","x")
+days = map(Date, load("input/DailyIFATbyAgeCat.jld","x"))
 N_HEachYear = load("input/N_HEachYearvs3.jld","N_HEachYear")
 
 for year = 1:length(N_HEachYear)
@@ -23,7 +22,7 @@ movsum = function(x::Vector{Float64},DT::Int64)
   return y
 end
 
-AggregateRSVData = function(DailyRSV::Vector{Array{Float64,1}},days::StepRange{Date,Base.Dates.Day},L::Base.Dates.Day)
+AggregateRSVData = function(DailyRSV::Vector{Array{Float64,1}},days::Vector{Date},L::Dates.Day)
   #Find first day of data
     S = sum(DailyRSV)
     FirstDayData = days[findfirst(S .> 0)]
@@ -45,7 +44,7 @@ pred_dates = Date(2000,1,1) + Dates.Day.(pred_times)
 function SetHospitalisationRate!(P::HH_RSVModelParameters)
   HR1 = [32.76*31.2,33.07*31.2,28.6*21.9,28.6*20.74,28.6*18.86,20.0*12.27,20.0*9.4,20.0*10.76,13.0*9.1,13.0*12.11,13.0*9.87,7.6*6.7];
   HR1 = HR1/10000
-  HR2 = mean([([7.11,7.78,7.34,4.13,4.1])*(7.6/10000); ([10.52,20,14.84,13.95,10.18,2.36,8.41])*(2./10000)])
+  HR2 = mean([([7.11,7.78,7.34,4.13,4.1])*(7.6/10000); ([10.52,20,14.84,13.95,10.18,2.36,8.41])*(2.0/10000)])
   HR2 = [HR2;[3.76,1.08,0.19]*(2.0/10000)]
   HR3 = zeros(14)
   P.HR = [HR1;HR2;HR3]
