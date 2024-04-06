@@ -25,7 +25,7 @@ function CondAgeOfInfectedU1(M,SolidProtDuration)
 end
 
 function MeanHR_U1(M,SolidProtDuration)
-    return vecdot(CondAgeOfInfectedU1(M,SolidProtDuration),HR1)
+    return dot(CondAgeOfInfectedU1(M,SolidProtDuration),HR1)
 end
 
 mutable struct HH_RSV_VaccinationModelParameters
