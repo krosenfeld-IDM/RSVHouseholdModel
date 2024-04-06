@@ -1,6 +1,6 @@
 # Calculate the population turnover rates that give the desired stationary household distributions
 
-using Roots
+using Roots,LinearAlgebra
 function HH_distrib_of_U1s(μ::Real,η::Real,H::Int64,MaxNumU1s::Int64)
     π_H = zeros(H+1)
     for n_u1 = 0:min(MaxNumU1s,H-1)
@@ -9,7 +9,7 @@ function HH_distrib_of_U1s(μ::Real,η::Real,H::Int64,MaxNumU1s::Int64)
     return normalize!(π_H,1)
 end
 
-mean_num_U1s_in_HH(μ::Real,η::Real,H::Int64,MaxNumU1s::Int64) = vecdot(collect(0:H),HH_distrib_of_U1s(μ,η,H,MaxNumU1s))
+mean_num_U1s_in_HH(μ::Real,η::Real,H::Int64,MaxNumU1s::Int64) = dot(collect(0:H),HH_distrib_of_U1s(μ,η,H,MaxNumU1s))
 
 function find_replacement_rate_matching_mean(η::Float64,H::Int64,MN_U1s::Real,MaxNumU1s::Int64)
     F(μ) = mean_num_U1s_in_HH(μ,η,H,MaxNumU1s) - MN_U1s;
