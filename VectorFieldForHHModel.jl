@@ -1,4 +1,5 @@
 #Constructs the vector field (the RHS of the fundamental dynamical equation of the model) for the household model
+using Sundials
 
 function set_conversion_matrices!(P::HH_RSVModelParameters)
     InvEffHHSize = (max.(1,N_vect.-1)).^(-P.EffHHSizePower);
@@ -57,7 +58,7 @@ function set_conversion_matrices!(P::HH_RSVModelParameters)
 end
 set_conversion_matrices!(P_ModelParams)
 
-get_population_size(z) = (vecdot(N_vect,z),vecdot(N2_vec,z))
+get_population_size(z) = (dot(N_vect,z),dot(N2_vec,z))
 
 function set_conditionalmatrices_thatchangeeachyear!(P::HH_RSVModelParameters,year::Int64)
     if year < 1
@@ -93,11 +94,11 @@ end
 
 function InplaceStateToHouseholdConversion!(z,P::HH_RSVModelParameters)
     #Calculate the household size to household size transmission rate
-    A_mul_B!(P.Pre.S1_H,P.ConvMatrix_S1_H,z)
-    A_mul_B!(P.Pre.I1_H,P.ConvMatrix_I1_H,z)
-    A_mul_B!(P.Pre.N1_H,P.ConvMatrix_N1,z)
-    A_mul_B!(P.Pre.N2_0_H,P.ConvMatrix_N2_0,z)
-    A_mul_B!(P.Pre.N2_1_H,P.ConvMatrix_N2_1,z)
+    mul!(P.Pre.S1_H,P.ConvMatrix_S1_H,z)
+    mul!(P.Pre.I1_H,P.ConvMatrix_I1_H,z)
+    mul!(P.Pre.N1_H,P.ConvMatrix_N1,z)
+    mul!(P.Pre.N2_0_H,P.ConvMatrix_N2_0,z)
+    mul!(P.Pre.N2_1_H,P.ConvMatrix_N2_1,z)
     return nothing
 end
 
@@ -107,13 +108,13 @@ function InPlaceHouseholdToAgeConversion!(z,P::HH_RSVModelParameters)
     P.Pre.N2_1_H[1] = 1.
     #Convert into a prediction about the numbers of infecteds and susceptibles in each age category
     P.Pre.I1_A .= mean(P.Pre.I1_H)*ones(sum(P.U1_cats))
-    A_mul_B!(P.Pre.I2_A,P.Inf_AgivState,z)
+    mul!(P.Pre.I2_A,P.Inf_AgivState,z)
     P.Pre.I_A .= [P.Pre.I1_A;inf_2*P.Pre.I2_A] #Over 1s are less infectious
     P.Pre.S1_A .=  (1-AvMaternalProtU1s(1/P.α,CurrentSolidProtectionDuration))*mean(P.Pre.S1_H)*ones(sum(P.U1_cats)) #Accounts for possibly being maternally protected
-    A_mul_B!(P.Pre.S2_A,P.Sus_AgivState,z)
+    mul!(P.Pre.S2_A,P.Sus_AgivState,z)
     P.Pre.S_A .= [P.Pre.S1_A;sus_2*P.Pre.S2_A]#Effective susceptibility is lower for O1s
     P.Pre.N1_A .= mean(P.Pre.S1_H)*ones(sum(P.U1_cats))
-    A_mul_B!(P.Pre.N2_A,P.N_AgivState,z)
+    mul!(P.Pre.N2_A,P.N_AgivState,z)
     P.Pre.N_A .= [P.Pre.N1_A;P.Pre.N2_A]
     return nothing
 end
@@ -121,7 +122,7 @@ end
 function InPlaceAgedepForceOfInfection!(z,P::HH_RSVModelParameters)
     #Force of infection at the level of the population outside of homestead
     (P.Pre.N,P.Pre.N2) = get_population_size(z)
-    A_mul_B!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A + P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
+    mul!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A .+ P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
     return nothing
 end
 
@@ -171,7 +172,7 @@ function TransmissionIncidence!(z,P::HH_RSVModelParameters)
 end
 
 function set_HH_growthrate!(z,P::HH_RSVModelParameters)
-    A_mul_B!(P.Pre.Num_H,P.ConvMatrix_N_H,z)
+    mul!(P.Pre.Num_H,P.ConvMatrix_N_H,z)
     for i = 1:d1
         P.Pre.HH_growth[i] = P.RateOfChangeOfHHs[N_vect[i]]*z[i]/P.Pre.Num_H[N_vect[i]]
     end
@@ -248,7 +249,7 @@ function construct_susceptible_HH_distribution_from_year(X::Matrix{Int64},d1::In
             row = [N_C,0,0,N_A,0,0]';
             G = ismember_row(States,row);
             if any(G)
-                z_0[G] += Float64(X[i,j]);
+                z_0[G] .+= Float64(X[i,j]);
             end
         end
     end
@@ -269,7 +270,7 @@ function get_equilibrium_state(date_for_solving_until)
     prob_eq = ODEProblem(F,x_0,tspan_eq,P_ModelParams);
     sol_eq = solve(prob_eq,CVODE_BDF(linear_solver=:GMRES),callback = cb_set_annual_changes,abstol = 1e-2, reltol = 1e-3)
     x_0_new = sol_eq[:,end]
-    x_0_new[x_0_new .< 0] = 0.
+    x_0_new[x_0_new .< 0] .= 0.
     return x_0_new,sol_eq
 end
 
