@@ -153,7 +153,7 @@ CondAgeDistrib = CondAgeOfInfectedU1(19.,30,1) #Just a placeholder
 RateOfU1Incidence = 0.
 
 function MeanHR_U1(M,S)
-    return vecdot(CondAgeOfInfectedU1(M,S),HR1)
+    return dot(CondAgeOfInfectedU1(M,S),HR1)
 end
 
 #Inplace allocation
@@ -345,16 +345,16 @@ P_ModelParams = create_RSV_model()
 
 function SetMixingMatrix!(P::HH_RSVModelParameters)
     U1Mixing = zeros(M_a,M_a);
-    U1Mixing[U1_cats,:] = 1.;
-    U1Mixing[:,U1_cats] = 1.;
+    U1Mixing[U1_cats,:] .= 1.;
+    U1Mixing[:,U1_cats] .= 1.;
     ChildMixing = zeros(M_a,M_a);
-    ChildMixing[C_cats,C_cats] = 1.;
+    ChildMixing[C_cats,C_cats] .= 1.;
     SchoolMixing = zeros(M_a,M_a);
-    SchoolMixing[S_cats,S_cats] = 1.;
+    SchoolMixing[S_cats,S_cats] .= 1.;
     AdultMixing = zeros(M_a,M_a);
-    AdultMixing[A_cats,A_cats] = 1.;
+    AdultMixing[A_cats,A_cats] .= 1.;
     HomogeneousMixing = zeros(M_a,M_a)
-    HomogeneousMixing[.~U1_cats,.~U1_cats] = 1.;
+    HomogeneousMixing[.~U1_cats,.~U1_cats] .= 1.;
     P.MixingMatrix = P.b_S*SchoolMixing .+ P.b_A*AdultMixing + P.β*HomogeneousMixing + P.b_C*U1Mixing;
     return nothing
 end
