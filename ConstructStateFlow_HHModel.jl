@@ -64,7 +64,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
   AgingS1_in = zeros(Int64,d1)
   for i = 1:d1
     if is_AgingS1_in[i]
-    AgingS1_in[i]  = (find(ismember_row(States,States[i,:]' + [1,0,0,-1,0,0]'))[1])
+    AgingS1_in[i]  = (findfirst(!iszero, ismember_row(States,States[i,:]' + [1,0,0,-1,0,0]')))
     end
   end
 
@@ -72,7 +72,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
   AgingI1_in = zeros(Int64,d1)
   for i = 1:d1
     if is_AgingI1_in[i]
-    AgingI1_in[i]  = (find(ismember_row(States,States[i,:]' + [0,1,0,0,-1,0]'))[1])
+    AgingI1_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,1,0,0,-1,0]')))
     end
   end
 
@@ -80,7 +80,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
   AgingR1_in = zeros(Int64,d1)
   for i = 1:d1
     if is_AgingR1_in[i]
-    AgingR1_in[i]  = (find(ismember_row(States,States[i,:]' + [0,0,1,0,0,-1]'))[1])
+    AgingR1_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,0,1,0,0,-1]')))
     end
   end
 
@@ -90,7 +90,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
     RecR1_in = zeros(Int64,d1)
     for i = 1:d1
       if is_RecR1_in[i]
-      RecR1_in[i]  = (find(ismember_row(States,States[i,:]' + [0,1,-1,0,0,0]'))[1])
+      RecR1_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,1,-1,0,0,0]')))
       end
     end
 
@@ -98,7 +98,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
     RecR2_in = zeros(Int64,d1)
     for i = 1:d1
       if is_RecR2_in[i]
-      RecR2_in[i]  = (find(ismember_row(States,States[i,:]' + [0,0,0,0,1,-1]'))[1])
+      RecR2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,0,0,0,1,-1]')))
       end
     end
 
@@ -107,7 +107,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
     RevR1_in = zeros(Int64,d1)
     for i = 1:d1
       if is_RevR1_in[i]
-      RevR1_in[i]  = (find(ismember_row(States,States[i,:]' + [-1,0,1,0,0,0]'))[1])
+      RevR1_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [-1,0,1,0,0,0]')))
       end
     end
 
@@ -115,7 +115,7 @@ function GenerateConstRateEventMatrix!(P::HH_RSVModelParameters)
     RevR2_in = zeros(Int64,d1)
     for i = 1:d1
       if is_RevR2_in[i]
-      RevR2_in[i]  = (find(ismember_row(States,States[i,:]' + [0,0,0,-1,0,1]'))[1])
+      RevR2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,0,0,-1,0,1]')))
       end
     end
     #Constant rate events
@@ -152,7 +152,7 @@ GenerateConstRateEventMatrix!(P_ModelParams)
 # Infection
 function GenerateInfectionEventMatrices!(P::HH_RSVModelParameters)
     #Houshold size effects
-    InvEffHHSize = (max.(1,N_vect-1)).^(-P.EffHHSizePower);
+    InvEffHHSize = (max.(1,N_vect.-1)).^(-1.0.*P.EffHHSizePower);
     HHInfRate1 = (States[:,2] + inf_2*States[:,5]).*InvEffHHSize;
     HHInfRate2 = (States[:,2] + inf_2*States[:,5]).*InvEffHHSize;
 
@@ -160,7 +160,7 @@ function GenerateInfectionEventMatrices!(P::HH_RSVModelParameters)
     InfI1_in = zeros(Int64,d1)
     for i = 1:d1
       if is_InfI1_in[i]
-      InfI1_in[i]  = (find(ismember_row(States,States[i,:]' + [1,-1,0,0,0,0]'))[1])
+      InfI1_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [1,-1,0,0,0,0]')))
       end
     end
 
@@ -168,7 +168,7 @@ function GenerateInfectionEventMatrices!(P::HH_RSVModelParameters)
     InfI2_in = zeros(Int64,d1)
     for i = 1:d1
       if is_InfI2_in[i]
-      InfI2_in[i]  = (find(ismember_row(States,States[i,:]' + [0,0,0,1,-1,0]'))[1])
+      InfI2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [0,0,0,1,-1,0]')))
       end
     end
 
@@ -220,7 +220,7 @@ is_D_S2_in = Bool[any(ismember_row(States,States[i,:]' + [-1,0,0,1,0,0]')) for i
 D_S2_in = zeros(Int64,d1)
 for i = 1:d1
   if is_D_S2_in[i]
-  D_S2_in[i]  = (find(ismember_row(States,States[i,:]' + [-1,0,0,1,0,0]'))[1])
+  D_S2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [-1,0,0,1,0,0]')))
   end
 end
 
@@ -228,7 +228,7 @@ is_D_I2_in = Bool[any(ismember_row(States,States[i,:]' + [-1,0,0,0,1,0]')) for i
 D_I2_in = zeros(Int64,d1)
 for i = 1:d1
   if is_D_I2_in[i]
-  D_I2_in[i]  = (find(ismember_row(States,States[i,:]' + [-1,0,0,0,1,0]'))[1])
+  D_I2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [-1,0,0,0,1,0]')))
   end
 end
 
@@ -236,7 +236,7 @@ is_D_R2_in = Bool[any(ismember_row(States,States[i,:]' + [-1,0,0,0,0,1]')) for i
 D_R2_in = zeros(Int64,d1)
 for i = 1:d1
   if is_D_R2_in[i]
-  D_R2_in[i]  = (find(ismember_row(States,States[i,:]' + [-1,0,0,0,0,1]'))[1])
+  D_R2_in[i]  = (findfirst(!iszero,ismember_row(States,States[i,:]' + [-1,0,0,0,0,1]')))
   end
 end
 
