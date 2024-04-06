@@ -1,14 +1,14 @@
 # Read in data and organise incidence into age category and weeks
-using JLD
-YearlyJointDistributions = load("EachYearJointDistribs_new.jld","people_distribution")
+using JLD,Dates
+YearlyJointDistributions = load("input/EachYearJointDistribs_new.jld","people_distribution")
 
-DailyRSV = load("DailyIFATbyAgeCat.jld","DailyRSVByAgeCat")
-days = load("DailyIFATbyAgeCat.jld","x")
-N_HEachYear = load("N_HEachYearvs3.jld","N_HEachYear")
+DailyRSV = load("input/DailyIFATbyAgeCat.jld","DailyRSVByAgeCat")
+days = load("input/DailyIFATbyAgeCat.jld","x")
+N_HEachYear = load("input/N_HEachYearvs3.jld","N_HEachYear")
 
 for year = 1:length(N_HEachYear)
     N_HEachYear[year][:,2] += N_HEachYear[year][:,1]
-    N_HEachYear[year][:,1] = 0
+    N_HEachYear[year][:,1] .= 0
 end
 # Aggregate the RSV case data
 movsum = function(x::Vector{Float64},DT::Int64)
@@ -24,9 +24,9 @@ movsum = function(x::Vector{Float64},DT::Int64)
 end
 
 AggregateRSVData = function(DailyRSV::Vector{Array{Float64,1}},days::StepRange{Date,Base.Dates.Day},L::Base.Dates.Day)
-    #Find first day of data
+  #Find first day of data
     S = sum(DailyRSV)
-    FirstDayData = days[find(S .> 0)[1]]
+    FirstDayData = days[findfirst(S .> 0)]
     #aggregate data
     SummedDailyRSV = [ movsum(DailyRSV[i],L.value) for i = 1:16 ]
     SummedDays = (days[1]+L):lookback:days[end]
