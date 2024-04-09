@@ -69,11 +69,11 @@ x_0_end = sol_rsv[:,end]
 
 # #Julia formats for saving
 using DataFrames,IterableTables
-@save "./NEW_DATA/Opt_params_schools_R_$(SchoolsOnlyR_0).jld" Θ_Opt CurrBestNegLL
-@save "./NEW_DATA/Latent_stat_schools_R_$(SchoolsOnlyR_0).jld" P_ModelParams.ξ̄ P_ModelParams.ϕ̄ P_ModelParams.σ_ξ P_ModelParams.σ_ϕ P_ModelParams.ρ_ξϕ
+save( "./NEW_DATA/Opt_params_schools_R_$(SchoolsOnlyR_0).jld", "Θ_Opt", Θ_Opt, "CurrBestNegLL", CurrBestNegLL)
+save( "./NEW_DATA/Latent_stat_schools_R_$(SchoolsOnlyR_0).jld", "ξ̄ ", P_ModelParams.ξ̄ , "ϕ̄ ", P_ModelParams.ϕ̄ , "σ_ξ", P_ModelParams.σ_ξ, "σ_ϕ", P_ModelParams.σ_ϕ, "ρ_ξϕ", P_ModelParams.ρ_ξϕ)
 Z_array = [P_ModelParams.Z_ξ[2:16]';P_ModelParams.Z_ϕ[2:16]']
-@save "./NEW_DATA/Latent_Vars_schools_R_$(SchoolsOnlyR_0).jld" Z_array
-@save "./NEW_DATA/x_0_for_subsequent_sims_R_$(SchoolsOnlyR_0).jld" x_0_end
+save("./NEW_DATA/Latent_Vars_schools_R_$(SchoolsOnlyR_0).jld", "Z_array", Z_array)
+save("./NEW_DATA/x_0_for_subsequent_sims_R_$(SchoolsOnlyR_0).jld", "x_0_end", x_0_end)
 
 # # MATLAB formats
 using MAT
