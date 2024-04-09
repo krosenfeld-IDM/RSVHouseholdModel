@@ -4,7 +4,7 @@ V_HH_S2_out = Dict()
 for i = 1:d1
     StatesOut = States[i,:] + [1,0,0,-States[i,4],0,States[i,4]-1]
     if any(ismember_row(States,StatesOut'))
-        k = find(ismember_row(States,StatesOut'))[1]
+        k = findfirst(!iszero, ismember_row(States,StatesOut'))
         push!(V_HH_S2_out,i => k)
     end
 end
@@ -13,7 +13,7 @@ V_HH_I2_out = Dict()
 for i = 1:d1
     StatesOut = States[i,:] + [1,0,0,-States[i,4],-1,States[i,4]]
     if any(ismember_row(States,StatesOut'))
-        k = find(ismember_row(States,StatesOut'))[1]
+        k = findfirst(!iszero, ismember_row(States,StatesOut'))
         push!(V_HH_I2_out,i => k)
     end
 end
@@ -24,7 +24,7 @@ D_HH_S2_out = Dict()
 for i = 1:d1
     StatesOut = States[i,:] + [1,0,0,-1,0,0]
     if any(ismember_row(States,StatesOut'))
-        k = find(ismember_row(States,StatesOut'))[1]
+        k = findfirst(!iszero,ismember_row(States,StatesOut'))
         push!(D_HH_S2_out,i => k)
     end
 end
@@ -33,7 +33,7 @@ D_HH_I2_out = Dict()
 for i = 1:d1
     StatesOut = States[i,:] + [1,0,0,0,-1,0]
     if any(ismember_row(States,StatesOut'))
-        k = find(ismember_row(States,StatesOut'))[1]
+        k = findfirst(!iszero,ismember_row(States,StatesOut'))
         push!(D_HH_I2_out,i => k)
     end
 end
@@ -42,7 +42,7 @@ D_HH_R2_out = Dict()
 for i = 1:d1
     StatesOut = States[i,:] + [1,0,0,0,0,-1]
     if any(ismember_row(States,StatesOut'))
-        k = find(ismember_row(States,StatesOut'))[1]
+        k = findfirst(!iszero,ismember_row(States,StatesOut'))
         push!(D_HH_R2_out,i => k)
     end
 end

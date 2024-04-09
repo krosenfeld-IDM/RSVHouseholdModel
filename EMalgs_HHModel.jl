@@ -1,5 +1,6 @@
 # EM algorithms
 using Optim,BlackBoxOptim
+using Debugger
 
 # Define M step --- Optimise parameters
 SearchRangeForInitialParams = [(0.,1.),(0.,1.),(10.,90.),(0.,1.),(0.,1.),(-30.,30.)]

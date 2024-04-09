@@ -121,7 +121,7 @@ end
 function InPlaceAgedepForceOfInfection!(z,P::HH_RSV_VaccinationModelParameters)
     #Force of infection at the level of the population outside of homestead
     (P.Pre.N,P.Pre.N2) = get_population_size(z)
-    mul!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A + P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
+    mul!(P.Pre.λ_A,P.MixingMatrix,(P.Pre.I_A .+ P.ϵ)/P.Pre.N) #note the scaling by 1/total population size
     return nothing
 end
 

@@ -14,8 +14,8 @@ P_ModelParams.b_C = Θ_Opt[1]
 P_ModelParams.β = Θ_Opt[2]
 P_ModelParams.α = 1/Θ_Opt[3]
 P_ModelParams.τ = Θ_Opt[4]
-P_ModelParams.Z_ξ[2:16] .= z[1,:]
-P_ModelParams.Z_ϕ[2:16] .= z[2,:]
+P_ModelParams.Z_ξ[2:16] = z[1,:]
+P_ModelParams.Z_ϕ[2:16] = z[2,:]
 SetMixingMatrix!(P_ModelParams)
 
 

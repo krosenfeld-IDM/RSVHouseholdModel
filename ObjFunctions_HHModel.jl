@@ -108,9 +108,6 @@ end
 
 #M step functions
 
-
-
-
 function neg_objective_for_params(Θ::Vector{Float64})
     if any(Θ .< 0)
         return Inf
@@ -160,8 +157,8 @@ function neg_objective_for_params_initial(Θ_initial::Vector{Float64})
         P_ModelParams.ϵ = 10.
         P_ModelParams.ξ̄ = Θ_initial[5]
         P_ModelParams.ϕ̄ = Θ_initial[6]
-        P_ModelParams.Z_ξ = P_ModelParams.ξ̄*ones(18)
-        P_ModelParams.Z_ϕ = P_ModelParams.ϕ̄*ones(18)
+        P_ModelParams.Z_ξ = P_ModelParams.ξ̄ .*ones(18)
+        P_ModelParams.Z_ϕ = P_ModelParams.ϕ̄ .*ones(18)
         # set_matrices_for_year!(P_ModelParams,-1)
         t_0 = Float64((SeasonStartDates[5] - Date(2000,1,1)).value)
         t_1 = Float64((SeasonEndDates[9] - Date(2000,1,1)).value)
@@ -197,8 +194,8 @@ function sol_for_params_initial(Θ_initial::Vector{Float64})
         P_ModelParams.ϵ = 10.
         P_ModelParams.ξ̄ = Θ_initial[5]
         P_ModelParams.ϕ̄ = Θ_initial[6]
-        P_ModelParams.Z_ξ = P_ModelParams.ξ̄*ones(18)
-        P_ModelParams.Z_ϕ = P_ModelParams.ϕ̄*ones(18)
+        P_ModelParams.Z_ξ = P_ModelParams.ξ̄ .*ones(18)
+        P_ModelParams.Z_ϕ = P_ModelParams.ϕ̄ .*ones(18)
         # set_matrices_for_year!(P_ModelParams,-1)
         t_0 = Float64((SeasonStartDates[5] - Date(2000,1,1)).value)
         t_1 = Float64((SeasonEndDates[9] - Date(2000,1,1)).value)

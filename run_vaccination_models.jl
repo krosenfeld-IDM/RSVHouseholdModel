@@ -1,8 +1,11 @@
 #This runs the forecasting of the model using inferred parameters
 #Default is to involve 5 processors to accelerate forecasting by simulating forwards in parallel before pooling result
+using Revise
+using DifferentialEquations
+using Distributed
 
-#Dependencies for running simulations in parallel
-# addprocs(5)
+# #Dependencies for running simulations in parallel
+# addprocs(7)
 # @everywhere cd(pwd())
 # @everywhere include("Basic_params.jl");
 # @everywhere include("Basic_vac_params.jl");
@@ -37,10 +40,13 @@ include("FutureSimulations.jl");
 include("PlotsForModel.jl");
 
 
-RepeatedForecasts = MonteCarloProblem(prob_vac,
-                                      output_func=output_func_for_rsv_inf_endpoint,
-                                      prob_func=prob_func_for_rsv_sims)
+# RepeatedForecasts = MonteCarloProblem(prob_vac,
+#                                       output_func=output_func_for_rsv_inf_endpoint,
+#                                       prob_func=prob_func_for_rsv_sims)
 
+RepeatedForecasts = EnsembleProblem(prob_vac,
+                                output_func=output_func_for_rsv_inf_endpoint,
+                                prob_func=prob_func_for_rsv_sims)
 
 #Comment/uncomment to choose which set of scenarios to loop over
 include("Loopovervaccinationscenarios.jl");

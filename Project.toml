@@ -1,5 +1,6 @@
 [deps]
 BlackBoxOptim = "a134a8b2-14d6-55f6-9291-3336d3ab0209"
+Debugger = "31a5f54b-26ea-5ae9-a837-f05ce5417438"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Hiccup = "9fb69e20-1954-56bb-a84f-559cc56a8ff7"
