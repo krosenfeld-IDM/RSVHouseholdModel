@@ -1,5 +1,7 @@
 #This runs the inference algorithm using the KCH hospitalisation data to fit for the unobserved
 #random seasonality and parameters using an EM algorithm
+using Revise
+using Debugger
 
 cd(pwd())
 include("Basic_params.jl");
@@ -34,12 +36,11 @@ P_currbest = P_ModelParams
 #loop over restart algorithm
 for i = 1:10
     println("Starting iteration $(i) of the EM algorithm")
-    if i > 1
-        Perform_E_step(100)
-    end
+    Perform_E_step(100)
     (Θ_Opt_poss,neg_LL_opt_poss) = Perform_M_step(600, 100)
-
+    global CurrBestNegLL  # Declare CurrBestNegLL as global
     if neg_LL_opt_poss < CurrBestNegLL
+        global P_ModelParams, Θ_Opt, Z_ξ_opt, Z_ϕ_opt, ξ̄_opt, ϕ̄_opt, σ_ξ_opt, σ_ϕ_opt, ρ_ξϕ_opt, P_currbest  # If these are also modified
         Θ_Opt = Θ_Opt_poss
         CurrBestNegLL = neg_LL_opt_poss
         Z_ξ_opt = P_ModelParams.Z_ξ
@@ -68,16 +69,16 @@ x_0_end = sol_rsv[:,end]
 
 # #Julia formats for saving
 using DataFrames,IterableTables
-@save "./DATA/Opt_params_schools_R_$(SchoolsOnlyR_0).jld" Θ_Opt CurrBestNegLL
-@save "./DATA/Latent_stat_schools_R_$(SchoolsOnlyR_0).jld" P_ModelParams.ξ̄ P_ModelParams.ϕ̄ P_ModelParams.σ_ξ P_ModelParams.σ_ϕ P_ModelParams.ρ_ξϕ
+@save "./NEW_DATA/Opt_params_schools_R_$(SchoolsOnlyR_0).jld" Θ_Opt CurrBestNegLL
+@save "./NEW_DATA/Latent_stat_schools_R_$(SchoolsOnlyR_0).jld" P_ModelParams.ξ̄ P_ModelParams.ϕ̄ P_ModelParams.σ_ξ P_ModelParams.σ_ϕ P_ModelParams.ρ_ξϕ
 Z_array = [P_ModelParams.Z_ξ[2:16]';P_ModelParams.Z_ϕ[2:16]']
-@save "./DATA/Latent_Vars_schools_R_$(SchoolsOnlyR_0).jld" Z_array
-@save "./DATA/x_0_for_subsequent_sims_R_$(SchoolsOnlyR_0).jld" x_0_end
+@save "./NEW_DATA/Latent_Vars_schools_R_$(SchoolsOnlyR_0).jld" Z_array
+@save "./NEW_DATA/x_0_for_subsequent_sims_R_$(SchoolsOnlyR_0).jld" x_0_end
 
 # # MATLAB formats
 using MAT
 t_opt,true_inc,model_pred,plt = create_comparison_plot(sol_rsv)
-file = matopen("./DATA/predictions_for_plotting_model_schools_R_$(SchoolsOnlyR_0).mat","w")
+file = matopen("./NEW_DATA/predictions_for_plotting_model_schools_R_$(SchoolsOnlyR_0).mat","w")
 write(file,"pred_times",t_opt)
 write(file,"true_incidence",true_inc)
 write(file,"model_pred",model_pred)
