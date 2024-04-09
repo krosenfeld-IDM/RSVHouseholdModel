@@ -34,12 +34,12 @@ P_currbest = P_ModelParams
 #loop over restart algorithm
 for i = 1:10
     println("Starting iteration $(i) of the EM algorithm")
-    if i > 1
-        Perform_E_step(100)
-    end
+    Perform_E_step(100)
     (Θ_Opt_poss,neg_LL_opt_poss) = Perform_M_step(600, 100)
 
+    global CurrBestNegLL
     if neg_LL_opt_poss < CurrBestNegLL
+        global P_ModelParams, Z_ξ_opt, Z_ϕ_opt, ξ̄_opt, ϕ̄_opt, σ_ξ_opt, σ_ϕ_opt, ρ_ξϕ_opt, P_currbest
         Θ_Opt = Θ_Opt_poss
         CurrBestNegLL = neg_LL_opt_poss
         Z_ξ_opt = P_ModelParams.Z_ξ
